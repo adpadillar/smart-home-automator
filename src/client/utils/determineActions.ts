@@ -4,11 +4,9 @@ export type Action = {
   trigger: "lt" | "gt" | "on" | "off";
   newState: {
     enabled: boolean;
-    metadata:
-      | undefined
-      | {
-          value: number;
-        };
+    metadata: {
+      value: number;
+    };
     stopAfter: number;
   };
 };

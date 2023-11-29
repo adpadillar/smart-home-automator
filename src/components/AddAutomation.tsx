@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { useRefData } from "~/client/hooks/useRefData";
 import { type Action } from "~/client/utils/determineActions";
 import toast from "react-hot-toast";
+import { uploadRefData } from "~/client/hooks/uploadRefData";
 
 interface AddAutomationProps {
   children?: React.ReactNode;
@@ -62,6 +63,7 @@ export type Actuator = {
 const AddAutomation: React.FC<AddAutomationProps> = () => {
   const [actuator_db, actuator_db_loading] = useRefData<Actuator>("actuators");
   const [sensor_db, sensor_db_loading] = useRefData<Sensor>("sensors");
+  const { pushData } = uploadRefData("actions");
 
   const [sensorId, setSensorId] = useState<string>("");
   const [actuatorId, setActuatorId] = useState<string>("");
@@ -78,7 +80,19 @@ const AddAutomation: React.FC<AddAutomationProps> = () => {
     Actuator & { id: string }
   >();
 
-  const handleSubmit = () => {
+  const restoreState = () => {
+    setSensorId("");
+    setActuatorId("");
+    setTrigger("");
+    setNewState(false);
+    setParameter("");
+    setStopAfter("");
+    setRevert(false);
+    setSelectedSensor(undefined);
+    setSelectedActuator(undefined);
+  };
+
+  const handleSubmit = async () => {
     const action: Action = {
       actuatorId: selectedActuator?.id ?? "",
       sensorId: selectedSensor?.id ?? "",
@@ -88,12 +102,13 @@ const AddAutomation: React.FC<AddAutomationProps> = () => {
         metadata:
           trigger === "gt" || trigger === "lt"
             ? { value: parseInt(parameter) }
-            : undefined,
+            : { value: 0 },
         stopAfter: revert ? parseInt(stopAfter) : 0,
       },
     };
 
-    console.log(action);
+    await pushData(action);
+    restoreState();
   };
 
   return (
@@ -291,9 +306,11 @@ const AddAutomation: React.FC<AddAutomationProps> = () => {
                     <span>Cancelar</span>
                   </Button>
                 </DialogClose>
-                <Button onClick={handleSubmit}>
-                  <span>Crear Automatización</span>
-                </Button>
+                <DialogClose>
+                  <Button onClick={handleSubmit} asChild>
+                    <span>Crear Automatización</span>
+                  </Button>
+                </DialogClose>
               </div>
             </div>
           </DialogHeader>
