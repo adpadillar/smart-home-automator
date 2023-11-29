@@ -90,7 +90,7 @@ const SettingsPage: NextPage<SettingsPageProps> = () => {
                 <AccordionContent>
                   <iframe
                     className="aspect-video w-full rounded-md shadow-xl"
-                    src="https://www.youtube.com/embed/4DNv8i0bFMg?si=cYd6JpHABjHC9N7G"
+                    src="https://www.youtube.com/embed/PacOhX3ynJI?si=jsRmWMFeLnGigXdg"
                     title="YouTube video player"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -116,6 +116,10 @@ const SettingsPage: NextPage<SettingsPageProps> = () => {
         <Card className="col-span-1 md:col-span-3">
           <CardHeader>Configuración del equipo</CardHeader>
           <CardContent>
+            <p className="text-sm text-gray-500">
+              Cambia el comportamiento del equipo. Estas configuraciones no se
+              aplican hasta reiniciar el dispositivo
+            </p>
             <Accordion type="multiple">
               <AccordionItem value="item-2">
                 <AccordionTrigger>Sensores</AccordionTrigger>

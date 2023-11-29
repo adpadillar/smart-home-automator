@@ -28,6 +28,12 @@ export const useRefData = <T>({
       }
 
       const data = snap.val() as unknown as Record<string, T>;
+
+      if (!data) {
+        setData([]);
+        setLoading(false);
+        return;
+      }
       // use the key as the id
       let result = Object.keys(data).map((key) => ({
         ...data[key],

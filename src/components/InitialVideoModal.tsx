@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
 interface InitialVideoModalProps {
@@ -57,7 +55,7 @@ const InitialVideoModal: React.FC<InitialVideoModalProps> = () => {
               <div className="pt-4">
                 <iframe
                   className="aspect-video w-full rounded-md shadow-xl"
-                  src="https://www.youtube.com/embed/4DNv8i0bFMg?si=cYd6JpHABjHC9N7G"
+                  src="https://www.youtube.com/embed/PacOhX3ynJI?si=jsRmWMFeLnGigXdg"
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
