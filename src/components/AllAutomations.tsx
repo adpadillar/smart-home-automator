@@ -57,7 +57,7 @@ const AllAutomations: React.FC<AllAutomationsProps> = () => {
         actuators && (
           <div className="grid grid-cols-1 gap-4 py-6 md:grid-cols-2">
             {automations.map((automation, i) => (
-              <Card>
+              <Card key={automation.id + i}>
                 <CardHeader>
                   <CardTitle>Automatizacion {i + 1}</CardTitle>
                   <CardDescription className="pt-2">

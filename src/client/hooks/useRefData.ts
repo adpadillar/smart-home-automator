@@ -21,6 +21,12 @@ export const useRefData = <T>({
   useEffect(() => {
     const dbRef = ref(db, path);
     const unsub = onValue(dbRef, (snap) => {
+      if (typeof snap.val() == "number") {
+        setData([snap.val()]);
+        setLoading(false);
+        return;
+      }
+
       const data = snap.val() as unknown as Record<string, T>;
       // use the key as the id
       let result = Object.keys(data).map((key) => ({

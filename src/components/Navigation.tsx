@@ -50,7 +50,7 @@ const NavigationBar: React.FC<NavigationBarProps> = () => {
                   <p>{user.email}</p>
                 </div>
               )}
-              <NavigationMenuItem>
+              <NavigationMenuItem asChild>
                 <NavigationMenuLink
                   asChild
                   className={navigationMenuTriggerStyle()}
