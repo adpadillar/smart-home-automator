@@ -5,42 +5,13 @@ import { auth } from "~/client/firebase";
 import InitialVideoModal from "~/components/InitialVideoModal";
 import NavigationBar from "~/components/Navigation";
 import Redirect from "~/components/Redirect";
-import AddAutomation from "~/components/AddAutomation";
-import { useEffect } from "react";
-import {
-  type Action,
-  type Measurement,
-  determineActions,
-} from "~/client/utils/determineActions";
+import AddAutomation, { type Sensor } from "~/components/AddAutomation";
+import LineChart from "~/components/LineChart";
+import { useRefData } from "~/client/hooks/useRefData";
 
 export default function Home() {
   const [user, loading] = useAuthState(auth);
-
-  useEffect(() => {
-    const actions: Array<Action> = [
-      {
-        actuatorId: "1",
-        trigger: "gt",
-        sensorId: "1",
-        newState: {
-          enabled: true,
-          metadata: {
-            value: 0,
-          },
-          stopAfter: 0,
-        },
-      },
-    ];
-
-    const measurements: Array<Measurement> = [
-      { sensorId: "1", value: 1, timestamp: 123224392 },
-      { sensorId: "1", value: 1, timestamp: 123224392 },
-      { sensorId: "1", value: 1, timestamp: 123224392 },
-    ];
-
-    const ans = determineActions(actions, measurements);
-    console.log(ans);
-  }, []);
+  const [sensors, loadingSensors] = useRefData<Sensor>({ path: "sensors" });
 
   if (!loading && !user) return <Redirect path="/login" />;
 
@@ -61,6 +32,15 @@ export default function Home() {
             <TypographyH1>Smart Home Automator</TypographyH1>
             <AddAutomation />
           </>
+        )}
+
+        {loadingSensors && <p>Loading sensors...</p>}
+        {!loadingSensors && sensors && (
+          <div className="grid grid-cols-1 gap-4">
+            {sensors.map((sensor) => (
+              <LineChart key={sensor.id} sensor={sensor} />
+            ))}
+          </div>
         )}
       </main>
     </>

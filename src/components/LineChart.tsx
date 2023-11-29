@@ -23,10 +23,11 @@ Chart.register(TimeSeriesScale);
 Chart.register(Title);
 Chart.register(Tooltip);
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useRefData } from "~/client/hooks/useRefData";
 import { type Measurement } from "~/client/utils/determineActions";
 import { type Sensor } from "./AddAutomation";
+import { mockDbPush } from "~/client/hooks/mockDbPush";
 
 interface LineChartProps {
   children?: React.ReactNode;
@@ -35,15 +36,12 @@ interface LineChartProps {
 
 const LineChart: React.FC<LineChartProps> = ({ sensor }) => {
   const { id: sensorId } = sensor;
-  const [data, loading] = useRefData<Measurement>(
-    "measurements",
-    (s) => s.sensorId == sensorId,
-    (a, b) => a.timestamp - b.timestamp,
-  );
-
-  useEffect(() => {
-    console.log(data);
-  }, [data, loading]);
+  const [data, loading] = useRefData<Measurement>({
+    path: "measurements",
+    filter: (s) => s.sensorId == sensorId,
+    sort: (a, b) => a.timestamp - b.timestamp,
+  });
+  const { pushRandomData } = mockDbPush("measurements");
 
   if (!loading && !data) return null;
 

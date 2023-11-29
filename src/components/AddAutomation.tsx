@@ -61,8 +61,12 @@ export type Actuator = {
 };
 
 const AddAutomation: React.FC<AddAutomationProps> = () => {
-  const [actuator_db, actuator_db_loading] = useRefData<Actuator>("actuators");
-  const [sensor_db, sensor_db_loading] = useRefData<Sensor>("sensors");
+  const [actuator_db, actuator_db_loading] = useRefData<Actuator>({
+    path: "actuators",
+  });
+  const [sensor_db, sensor_db_loading] = useRefData<Sensor>({
+    path: "sensors",
+  });
   const { pushData } = uploadRefData("actions");
 
   const [sensorId, setSensorId] = useState<string>("");
