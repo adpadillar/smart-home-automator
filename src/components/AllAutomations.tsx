@@ -1,4 +1,16 @@
 import React from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import { useRefData } from "~/client/hooks/useRefData";
 import { type Action } from "~/client/utils/determineActions";
 import {
@@ -9,13 +21,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { type Actuator, type Sensor, getTriggerLabel } from "./AddAutomation";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { deleteRefData } from "~/client/hooks/deleteRefData";
 
 interface AllAutomationsProps {
   children?: React.ReactNode;
 }
 
 const AllAutomations: React.FC<AllAutomationsProps> = () => {
+  const { deleteData } = deleteRefData();
   const [automations, loading] = useRefData<Action>({
     path: "actions",
     limit: 100,
@@ -84,7 +98,36 @@ const AllAutomations: React.FC<AllAutomationsProps> = () => {
 
                 <CardFooter className="flex space-x-2">
                   <Button variant="outline">Editar</Button>
-                  <Button>Eliminar</Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <Button asChild>
+                        <span>Eliminar</span>
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Estas seguro de eliminar esta automatizacion?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Esta accion no se puede deshacer, una vez eliminada la
+                          automatizacion, será borrada de nuestros servidores y
+                          no podras recuperarla.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          className={buttonVariants({ variant: "destructive" })}
+                          onClick={() => {
+                            void deleteData("actions/" + automation.id);
+                          }}
+                        >
+                          Eliminar
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </CardFooter>
               </Card>
             ))}
