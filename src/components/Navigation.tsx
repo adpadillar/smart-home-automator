@@ -37,7 +37,7 @@ const NavigationBar: React.FC<NavigationBarProps> = () => {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Cuenta</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent className="list-none">
             <div className="flex w-[340px] max-w-[90vw] flex-col space-y-4 p-4">
               {!loading && user && (
                 <div className="flex items-center space-x-3 ">
@@ -50,6 +50,14 @@ const NavigationBar: React.FC<NavigationBarProps> = () => {
                   <p>{user.email}</p>
                 </div>
               )}
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={navigationMenuTriggerStyle()}
+                >
+                  <Link href="/settings">Configuración</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
               <Button onClick={signOut}>Cerrar sesión</Button>
             </div>
           </NavigationMenuContent>
