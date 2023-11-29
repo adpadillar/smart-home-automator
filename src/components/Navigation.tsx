@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "~/client/firebase";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { TypographyP } from "@/components/ui/typography";
 import { signOut } from "~/client/login";
 
 interface NavigationBarProps {
@@ -27,8 +26,13 @@ const NavigationBar: React.FC<NavigationBarProps> = () => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-            Configurar Eventos
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <Link href="/">Configurar Eventos</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <Link href="/visualize">Datos</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
