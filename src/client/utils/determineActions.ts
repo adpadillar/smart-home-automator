@@ -1,6 +1,4 @@
-import { Actuator } from "~/components/AddAutomation";
-
-type Action = {
+export type Action = {
   sensorId: string;
   actuatorId: string;
   trigger: "lt" | "gt" | "on" | "off";
@@ -15,13 +13,13 @@ type Action = {
   };
 };
 
-type Measurement = {
+export type Measurement = {
   sensorId: string;
   value: number;
   timestamp: number;
 };
 
-type NewState = {
+export type NewState = {
   actuatorId: string;
   enabled: boolean;
 };
@@ -29,4 +27,6 @@ type NewState = {
 export const determineActions = (
   actions: Array<Action>,
   measurements: Array<Measurement>,
-): Array<NewState> => {};
+): Array<NewState> => {
+  return [];
+};

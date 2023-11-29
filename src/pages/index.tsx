@@ -6,9 +6,41 @@ import InitialVideoModal from "~/components/InitialVideoModal";
 import NavigationBar from "~/components/Navigation";
 import Redirect from "~/components/Redirect";
 import AddAutomation from "~/components/AddAutomation";
+import { useEffect } from "react";
+import {
+  type Action,
+  type Measurement,
+  determineActions,
+} from "~/client/utils/determineActions";
 
 export default function Home() {
   const [user, loading] = useAuthState(auth);
+
+  useEffect(() => {
+    const actions: Array<Action> = [
+      {
+        actuatorId: "1",
+        trigger: "gt",
+        sensorId: "1",
+        newState: {
+          enabled: true,
+          metadata: {
+            value: 0,
+          },
+          stopAfter: 0,
+        },
+      },
+    ];
+
+    const measurements: Array<Measurement> = [
+      { sensorId: "1", value: 1, timestamp: 123224392 },
+      { sensorId: "1", value: 1, timestamp: 123224392 },
+      { sensorId: "1", value: 1, timestamp: 123224392 },
+    ];
+
+    const ans = determineActions(actions, measurements);
+    console.log(ans);
+  }, []);
 
   if (!loading && !user) return <Redirect path="/login" />;
 
