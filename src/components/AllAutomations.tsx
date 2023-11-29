@@ -23,6 +23,7 @@ import {
 import { type Actuator, type Sensor, getTriggerLabel } from "./AddAutomation";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { deleteRefData } from "~/client/hooks/deleteRefData";
+import EditAutomation from "./EditAutomation";
 
 interface AllAutomationsProps {
   children?: React.ReactNode;
@@ -97,7 +98,7 @@ const AllAutomations: React.FC<AllAutomationsProps> = () => {
                 </CardHeader>
 
                 <CardFooter className="flex space-x-2">
-                  <Button variant="outline">Editar</Button>
+                  <EditAutomation action={automation} />
                   <AlertDialog>
                     <AlertDialogTrigger>
                       <Button asChild>
